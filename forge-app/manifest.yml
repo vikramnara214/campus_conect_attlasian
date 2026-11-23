@@ -1,0 +1,37 @@
+modules:
+  jira:issuePanel:
+    - key: campus-context-panel
+      name: CampusContext Roster & Graph
+      resource: main
+      resolver:
+        function: api-resolver
+  rovo:agent:
+    - key: campus-context-rovo
+      name: CampusContext Expert Agent
+      description: Intelligent contributor routing and context discovery.
+      prompt: You are CampusContext AI, helping engineers find context and collaborators.
+      actions:
+        - get-context-action
+  rovo:mcp:
+    - key: campus-context-mcp
+      name: CampusContext MCP
+      description: MCP bridge for CampusContext context engine
+      tools:
+        - get-context-action
+  action:
+    - key: get-context-action
+      name: Fetch Feature Context
+      description: Fetch context and details for a given feature keyword
+      actionVerb: GET
+      function: api-resolver
+
+app:
+  id: ari:cloud:ecosystem::app/campus-context-demo
+  runtime:
+    name: nodejs22.x
+  remotes:
+    - key: campus-backend
+      baseUrl: https://api.campuscontext.internal/api
+
+providers:
+  auth: []
